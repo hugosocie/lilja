@@ -1,0 +1,36 @@
+// ==========================================================================
+// Class helpers
+// ==========================================================================
+
+
+
+//
+// Vertical alignement
+// ==========================================================================
+
+.valign-helper,
+.valign-item,
+.valign-container:before {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.valign-helper { height: 100%; }
+.valign-item { max-width: 100%; }
+
+.valign-container:before {
+  content: '';
+  height: 100%;
+  width: 0;
+  position: relative;
+}
+
+
+//
+// Float and clear
+// ==========================================================================
+
+.clearfix,
+.clr {
+  @include clearfix;
+}

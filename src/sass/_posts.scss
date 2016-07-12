@@ -1,0 +1,130 @@
+#posts {
+    font-size: 0;
+
+    max-width: 1800px;
+    margin: 0 auto;
+
+    article {
+        width: 25%;
+        background: #383839;
+        display: inline-block;
+        vertical-align: top;
+        position: relative;
+        overflow: hidden;
+        //@include transition( background 3s );
+
+        &:after {
+            content: '';
+            position: relative;
+            display: table;
+            padding-bottom: 175%;
+        }
+
+        .fake-link {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: inherit;
+            top: 0;
+            left: 0;
+        }
+
+        > .empty {
+            position: absolute;
+            background: #222;
+            height: 100%; width: 100%;
+            top: 0; left: 0;
+            @include transition( background 3s );
+            opacity: .2;
+        }
+
+        &.link {
+            cursor: pointer;
+        }
+
+        header {
+            background: inherit;
+            font-size: 32px;
+            font-weight: 100;
+            text-transform: uppercase;
+            position: absolute;
+            width: 100%;
+            color: #fff;
+            padding: 30px;
+            box-sizing: border-box;
+            bottom: 0;
+            z-index: 3;
+            @include transition( background 3s );
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .date {
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba( #000, .4 );
+            margin-top: 6px;
+        }
+
+        .picture {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 2;
+            overflow: hidden;
+            @include transition( all 5s );
+
+            img { opacity: 0; }
+        }
+
+        .layer {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: rgba( #000, 0 );
+            top: 0;
+            left: 0;
+            z-index: 2;
+            @include transition( background 1s );
+
+            svg {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                @include transform( translate( -50%, -50% ) );
+
+                path { @include transition( fill 1s ); }
+            }
+
+            &.is-loading {
+                background: rgba( #000, .7 ) !important;
+            }
+        }
+
+        &.large {
+            width: 50%;
+
+            &:after { padding-bottom: 87.5%; }
+
+            header {
+                bottom: auto;
+                top: 0;
+                font-size: 52px;
+            }
+        }
+
+        &:hover {
+            .picture { @include transform( scale( 1.1 ) ); }
+            .layer { background: rgba( #000, .3 ); }
+        }
+
+    }
+
+}

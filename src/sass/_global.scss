@@ -1,0 +1,34 @@
+// ==========================================================================
+// Global styles
+// ==========================================================================
+
+body {
+    font-family: $font-default;
+    color: #393938;
+    background: #222;
+    overflow: hidden;
+
+    #content,
+    #content-ajax {
+        overflow: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        @include transition( opacity 1s );
+
+        &.visible { opacity: 1; }
+    }
+
+    #content-ajax {
+        z-index: 10;
+        opacity: 0;
+        @include transition( opacity .5s );
+    }
+
+    &.not-ready {
+        #content,
+        #content-ajax { opacity: 0; }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "starter",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "hugosocie <hugosocie@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "vue": "^1.0.22",
+    "umbrella": "^2.2.0"
+  }
+}
