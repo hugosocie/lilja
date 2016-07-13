@@ -5,6 +5,8 @@
     color: #fff;
     background: #393938;
     font-size: 0;
+    z-index: 1;
+    //@include transform-style( preserve-3d );
 
     h1 {
         font-size: 150px;
@@ -13,6 +15,7 @@
         text-transform: uppercase; 
         position: relative;
         z-index: 3;
+        @include transform( translate3d( 0, 0, -5px ) scale( 1.5 ) );
     }
 
     .and {
@@ -20,8 +23,8 @@
         top: 50%;
         left: 50%;
         font-size: 400px;
-        @include transform( translate( -50%, -50% ) );
         opacity: .15;
+        @include transform( translate( -50%, -50% ) );
     }
 
     .picture,
@@ -39,6 +42,7 @@
         z-index: 1;
         opacity: 0;
         @include transition( opacity 3s );
+        @include transform( translate3d( 0, 0, -3px ) scale( 1.3 ) );
 
         &.current {
             opacity: 1;

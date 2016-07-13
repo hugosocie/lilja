@@ -7,6 +7,39 @@
     .content {
         max-width: 800px;
         margin: 0 auto;
+        @include transition( all .8s );
+    }
+
+    .close {
+        height: 60px;
+        width: 60px;
+        position: fixed;
+        background: transparent;
+        border: none;
+        right: 20px;
+        top: 20px;
+        outline: none;
+        cursor: pointer;
+
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 100%;
+            background: #c0c0c0;
+            left: 0;
+            top: 50%;
+            @include transition( all 1s );
+        }
+
+        &:before { @include transform( rotate( 45deg ) ); }
+        &:after { @include transform( rotate( -45deg ) ); }
+
+        &:hover {
+            &:before { @include transform( rotate( 135deg ) ); }
+            &:after { @include transform( rotate( 45deg ) ); }
+        }
     }
 
     h1 {
@@ -14,12 +47,13 @@
         font-weight: 100;
         text-transform: uppercase;
         padding-top: 91px;
+        @include transition( color 1s );
     }
 
     .date {
         font-size: 14px;
-        font-weight: 600;
-        opacity: .3;
+        font-weight: 300;
+        color: #c0c0c0;
         margin-top: 4px;
     }
 
@@ -29,16 +63,15 @@
         border-bottom: solid 1px;
         width: 100%;
         max-width: 200px;
+        @include transition( border-color 1s );
     }
 
     .body {
         font-size: 20px;
         line-height: 1.7em;
-        font-weight: 500;
+        font-weight: 300;
 
-        p {
-            margin-bottom: 50px;
-        }
+        p { margin-bottom: 50px; }
 
         img {
             width: 100%;
@@ -46,6 +79,119 @@
 
             box-shadow: 0 10px 0 #393938;
             border-bottom: solid 1px #fff;
+
+            @include transition( box-shadow 1s );
         }
     }
+
+    .nav {
+        font-size: 0;
+        margin-top: 110px;
+        position: relative;
+
+        &:before, &:after {
+            content: '';
+            height: 1px;
+            width: 80px;
+            position: absolute;
+            left: 50%;
+            background: #c0c0c0;
+            margin-left: -40px;
+        }
+
+        &:before { top: -5px; }
+        &:after { bottom: -5px; }
+
+        li {
+            width: 50%;
+            display: inline-block;
+            vertical-align: top;
+            font-size: 16px;
+            color: #c0c0c0;
+            font-weight: 300;
+            text-transform: uppercase;
+
+            a {
+                color: inherit;
+                text-decoration: none;
+                padding: 20px 0;
+                position: relative;
+                border-top: solid 1px #c0c0c0;
+                border-bottom: solid 1px #c0c0c0;
+                box-sizing: border-box;
+                display: block;
+                z-index: 2;
+                @include transition( all 1s );
+
+                span {
+                    @include ellipsis( 100% );
+                    display: block;
+                }
+
+                &:before {
+                    position: absolute;
+                    content: '';
+                    top: -1px;
+                    background: #fff;
+                    z-index: 1;
+                }
+
+                &:after {
+                    position: absolute;
+                    z-index: 1;
+                    content: '';
+                    top: 0px;
+                    @include transition( all .5s );
+                }
+
+                &:hover { color: darken( #c0c0c0, 40% ); }
+            }
+            
+            &.prev { 
+                text-align: left;
+
+                a {
+                    padding-left: 50px;
+                    padding-right: 25px;
+                    border-right: solid 1px #c0c0c0;
+
+                    &:before {
+                        left: 0;
+                        @include triangle( 58px, #c0c0c0, left );
+                    }
+
+                    &:after {
+                        left: 1px;
+                        @include triangle( 56px, #fff, left );
+                    }
+                }
+            }
+
+            &.next {
+                text-align: right;
+
+                a {
+                    padding-right: 50px;
+                    padding-left: 25px;
+                    border-left: solid 1px #c0c0c0;
+                    margin-left: -1px;
+
+                    &:before {
+                        right: 0;
+                        @include triangle( 58px, #c0c0c0, right );
+                    }
+
+                    &:after {
+                        right: 1px;
+                        @include triangle( 56px, #fff, right );
+                    }
+                }
+            }
+        }
+    }
+}
+
+#content-ajax {
+    .post .content { @include transform( translate( 0, -30px ) ); }
+    &.visible .post .content { @include transform( translate( 0, 0px ) ); }
 }

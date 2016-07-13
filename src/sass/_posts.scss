@@ -3,6 +3,9 @@
 
     max-width: 1800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    @include transform( translate3d( 0, 0, 0 ) );
 
     article {
         width: 25%;

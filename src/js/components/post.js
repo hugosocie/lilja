@@ -10,7 +10,7 @@ module.exports = {
 
     computed : {},
 
-    props : [ 'palette', 'index' ],
+    props : [ 'palette', 'index', 'loading' ],
 
     watch : {
         palette : function(){
@@ -25,13 +25,22 @@ module.exports = {
     },
 
     methods : {
+
         updateColor : function(){
             var i = this.index !== null ?
                 this.index : 
                 Math.round( Math.random() * 4 );
 
             this.color = '#' + this.palette[ i ];
-        }
+            this.index = null;
+        },
+
+        loadArticle : function( url ){
+            if( this.loading ) return;
+
+            //this.isLoading = true;
+            this.$root.loadContent( url );
+        },
     }
 
 }

@@ -15,9 +15,16 @@ get_header(); ?>
             is="post"
             inline-template
             :palette="palette"
-            :index="index">
+            :index.sync="index"
+            :loading.sync="loading">
+
+            <button
+                class="close"
+                v-on:click.prevent="loadArticle( '/' )">
+            </button>
 
             <div class="content">
+
                 <h1><?php the_title(); ?></h1>
                 <p class="date"><?php the_date( 'd/m/Y' ); ?></p>
                 <hr/>
@@ -25,9 +32,39 @@ get_header(); ?>
                 <div class="body">
                     <?php the_content(); ?>
                 </div>
+
+                <ul class="nav">
+                    <li class="prev">
+                        <?php $adj = get_adjacent_post( '', '', true );
+                        if( !empty( $adj ) ): ?>
+                            <a href="<?php the_permalink( $adj->ID ); ?>"
+                                v-on:click.prevent="loadArticle( '<?php the_permalink( $adj->ID ); ?>' )">
+                                <span><?= $adj ->post_title ?></span>
+                            </a>
+                        <?php else: ?>
+                            <a href="/" v-on:click.prevent="loadArticle( '/' )">
+                                <span>Retour</span>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                    <li class="next">
+                        <?php $adj = get_adjacent_post( '', '', false );
+                        if( !empty( $adj ) ): ?>
+                            <a href="<?php the_permalink( $adj->ID ); ?>"
+                                v-on:click.prevent="loadArticle( '<?php the_permalink( $adj->ID ); ?>' )">
+                                <span><?= $adj ->post_title ?></span>
+                            </a>
+                        <?php else: ?>
+                            <a href="/" v-on:click.prevent="loadArticle( '/' )">
+                                <span>Retour</span>
+                            </a>
+                        <?php endif; ?>
+                    </li>
+                </ul>
             </div>
 
             <style>
+                .post .close:hover:before, .post .close:hover:after { background : {{ color }}; }
                 .post h1 { color : {{ color }}; }
                 .post hr { border-bottom-color : {{ color }}; }
                 .post .body img { box-shadow : 0 10px 0 {{ color }}; }
