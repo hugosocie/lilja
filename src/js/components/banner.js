@@ -27,6 +27,10 @@ module.exports = {
             this.palette = this.palettes[ this.current ];
             this.paletteindex = this.current;
         }
+    },
+
+    components : {
+        'error' : require( './error.js' )
     }
 
 }

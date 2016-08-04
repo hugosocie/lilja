@@ -1,64 +1,61 @@
 <?php
 /**
- * The template for displaying 404 pages (not found).
+ * The template for displaying all pages.
  *
- * @link https://codex.wordpress.org/Creating_an_Error_404_Page
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site may use a
+ * different template.
+ *
+ * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package lilja
  */
 
 get_header(); ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+    <div
+        id="banner"
+        is="banner"
+        inline-template
+        class="valign-container"
+        :palette.sync="palette"
+        :palettes="palettes"
+        :timer.sync="bannerTimer"
+        :paletteindex.sync="paletteindex">
 
-			<section class="error-404 not-found">
-				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'lilja' ); ?></h1>
-				</header><!-- .page-header -->
+        <?php if( have_rows( 'slider', 4 ) ):
+            $i = 1;
+            while ( have_rows( 'slider', 4 ) ) : the_row(); ?>
+                <div
+                    class="picture picture-<?= $i ?>"
+                    v-bind:class="{ current : <?= $i ?> === current }"
+                    style="background-image: url( '<?php the_sub_field( 'slider_picture' ); ?>' );"?>
+                </div>
+            <?php $i++;
+            endwhile;
+        endif; ?>
 
-				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'lilja' ); ?></p>
+        <div class="layer"></div>
 
-					<?php
-						get_search_form();
+        <h1 class="valign-item"
+            is="error"
+            inline-template
+            v-data data='{
+                "dest_01" : "<?= get_field( 'destination_01' ) ?>",
+                "dest_02" : "<?= get_field( 'destination_02' ) ?>",
+                "and" : "&"
+            }'>
+            <?php
+                echo '<span class="dest-01">{{ dest_01 }}</span>';
+                echo '<span class="and">{{ and }}</span><br/>';
+                echo '<span class="dest-02">{{ dest_02 }}</span>';
+            ?>
+        </h1>
 
-						the_widget( 'WP_Widget_Recent_Posts' );
+        <div class="back-to-home">
+            <a href="/">Retour à l'accueil</a>
+        </div>
+    </div>
 
-						// Only show the widget if site has multiple categories.
-						if ( lilja_categorized_blog() ) :
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'lilja' ); ?></h2>
-						<ul>
-						<?php
-							wp_list_categories( array(
-								'orderby'    => 'count',
-								'order'      => 'DESC',
-								'show_count' => 1,
-								'title_li'   => '',
-								'number'     => 10,
-							) );
-						?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-						endif;
-
-						/* translators: %1$s: smiley */
-						$archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'lilja' ), convert_smilies( ':)' ) ) . '</p>';
-						the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$archive_content" );
-
-						the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
-
-				</div><!-- .page-content -->
-			</section><!-- .error-404 -->
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-<?php
-get_footer();
+<?php get_footer();

@@ -1,0 +1,36 @@
+.error404 {
+
+    #content { overflow: hidden; }
+
+    .back-to-home {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        width: 100%;
+        font-size: 14px;
+        z-index: 20;
+
+        a {
+            color: #fff;
+            font-weight: 300;
+            text-decoration: none;
+            border-bottom: solid 1px #fff;
+
+            &:after {
+                position: fixed;
+                height: 100%;
+                width: 100%;
+                content: '';
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+
+}
+
+@media screen and ( max-width : $mobile-size ) {
+    .error404 #banner {
+        height: 100vh;
+    }
+}
