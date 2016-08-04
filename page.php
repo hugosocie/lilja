@@ -84,21 +84,18 @@ get_header(); ?>
                         <p class="date"><?= date( 'd/m/Y', strtotime( $post->post_date ) ); ?></p>
                     </header>
 
-                    <?php if ( has_post_thumbnail() ): ?>
-                        <div
-                            class="picture"
-                            v-el:picture
-                            style="background-image: url( '<?= wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) ) ?>' )">
-                            <img v-if="false" src="<?= wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) ) ?>">
-                        </div>
-                    <?php else: ?>
-                        <div
-                            class="picture"
-                            v-el:picture
-                            style="background-image:url( '<?= catch_that_image() ?>' )">
-                            <img v-if="false" src="<?= catch_that_image() ?>">
-                        </div>
-                    <?php endif; ?>
+                    <?php if ( has_post_thumbnail() ):
+                        $img = wp_get_attachment_url( get_post_thumbnail_id( $post->ID ) );
+                    else:
+                        $img = catch_that_image();
+                    endif; ?>
+
+                    <div
+                        class="picture"
+                        v-el:picture
+                        style="background-image: url( '<?= $img ?>' )">
+                        <img v-if="false" src="<?= $img ?>">
+                    </div>
 
                     <div class="layer"
                         v-bind:class="{ 'is-loading': isLoading }">

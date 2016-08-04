@@ -14,7 +14,6 @@
         vertical-align: top;
         position: relative;
         overflow: hidden;
-        //@include transition( background 3s );
 
         &:after {
             content: '';
@@ -41,9 +40,7 @@
             opacity: .2;
         }
 
-        &.link {
-            cursor: pointer;
-        }
+        &.link { cursor: pointer; }
 
         header {
             background: inherit;
@@ -127,7 +124,40 @@
             .picture { @include transform( scale( 1.1 ) ); }
             .layer { background: rgba( #000, .3 ); }
         }
-
     }
 
+}
+
+@media screen and ( max-width : $mobile-size ) {
+    #posts {
+
+        article,
+        article.large {
+            width: 100%;
+
+            //&:after { padding-bottom: 100%; }
+            &:after { display: none; }
+
+            .fake-link {
+                position: relative;
+            }
+
+            header {
+                font-size: 22px;
+                position: relative;
+            }
+
+            .picture {
+                height: 50vw;
+                position: relative;
+            }
+
+            .layer {
+                height: 50vw;
+                bottom: 0;
+                top: auto;
+            }
+        }
+
+    }
 }

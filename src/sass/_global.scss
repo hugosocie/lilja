@@ -7,10 +7,14 @@ body {
     color: #393938;
     background: #222;
     overflow: hidden;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 
     #content,
     #content-ajax {
         overflow: auto;
+        overflow-x: hidden;
         position: absolute;
         top: 0;
         left: 0;
@@ -31,5 +35,20 @@ body {
     &.not-ready {
         #content,
         #content-ajax { opacity: 0; }
+    }
+}
+
+@media screen and ( max-width : $mobile-size ) {
+    body {
+        overflow: auto;
+        height: auto;
+        position: relative;
+
+        #content,
+        #content-ajax {
+            height: auto;
+            overflow: hidden;
+            @include perspective( none );
+        }
     }
 }

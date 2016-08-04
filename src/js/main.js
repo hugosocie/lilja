@@ -63,6 +63,10 @@ new Vue({
                     window.history.pushState( {}, 'lilja', url );
                 }
 
+                if( window.innerWidth <= 768 ) {
+                    u( 'body' ).scroll();
+                }
+
             }, function(){
                 _this.loading = true;
             });

@@ -87,6 +87,7 @@
     .nav {
         font-size: 0;
         margin-top: 110px;
+        margin-bottom: 110px;
         position: relative;
 
         &:before, &:after {
@@ -194,4 +195,58 @@
 #content-ajax {
     .post .content { @include transform( translate( 0, -30px ) ); }
     &.visible .post .content { @include transform( translate( 0, 0px ) ); }
+}
+
+@media screen and ( max-width : $mobile-size ) {
+    .post {
+        padding: 20px;
+
+        h1 {
+            font-size: 26px;
+            padding-top: 60px;
+        }
+
+        hr {
+            margin-bottom: 28px;
+        }
+
+        .close {
+            position: relative;
+            margin: 0 auto;
+            right: auto;
+            display: block;
+        }
+
+        .body {
+            font-size: 16px;
+            line-height: 1.5em;
+        }
+
+        .nav {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            margin-left: -20px;
+            margin-right: -20px;
+
+            &:before,
+            &:after { display: none; }
+
+            li {
+                width: 100%;
+
+                &.prev {
+                    a { border-right : none; }
+                }
+                &.next {
+                    a {
+                        margin-top: -1px;
+                        border-top: none;
+                        border-left : none;
+                    }
+                }
+            }
+        }
+    }
+
+    #content-ajax .post .content { @include transform( translate( 0, 0px ) ); }
 }

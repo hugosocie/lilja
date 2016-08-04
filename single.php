@@ -61,13 +61,32 @@ get_header(); ?>
                         <?php endif; ?>
                     </li>
                 </ul>
+
+                <?php if ( comments_open() || get_comments_number() ) :
+                    comments_template();
+                endif; ?>
             </div>
 
             <style>
-                .post .close:hover:before, .post .close:hover:after { background : {{ color }}; }
-                .post h1 { color : {{ color }}; }
+                .post .close:hover:before, .post .close:hover:after,
+                .comments .comment-header .picture { background : {{ color }}; }
+
+                .post h1,
+                .comments .title { color : {{ color }}; }
+
                 .post hr { border-bottom-color : {{ color }}; }
+
                 .post .body img { box-shadow : 0 10px 0 {{ color }}; }
+
+
+                .comments .comment-form #author:focus,
+                .comments .comment-form #email:focus,
+                .comments .comment-form textarea:focus { border-color: {{ color }}; }
+
+                .comments .comment-form #submit { background: {{ color }}; }
+
+                .comments .comment-list li#comment-error,
+                .comments .comment-list li#comment-pending { box-shadow: -10px 0 0 {{ color }}; }
             </style>
 
         </div>

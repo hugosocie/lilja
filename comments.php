@@ -20,66 +20,82 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments-area">
+<div class="comments"
+	is="comments"
+	inline-template>
 
-	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) : ?>
-		<h2 class="comments-title">
-			<?php
-				printf( // WPCS: XSS OK.
-					esc_html( _nx( 'One thought on &ldquo;%2$s&rdquo;', '%1$s thoughts on &ldquo;%2$s&rdquo;', get_comments_number(), 'comments title', 'lilja' ) ),
-					number_format_i18n( get_comments_number() ),
-					'<span>' . get_the_title() . '</span>'
-				);
-			?>
-		</h2>
+	<h2 class="title">
+		<?= get_comments_number() ?>
+		<?= get_comments_number() > 1 ? 'Commentaires' : 'Commentaire' ?>
+	</h2>
 
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-		<nav id="comment-nav-above" class="navigation comment-navigation" role="navigation">
-			<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'lilja' ); ?></h2>
-			<div class="nav-links">
-
-				<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'lilja' ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'lilja' ) ); ?></div>
-
-			</div><!-- .nav-links -->
-		</nav><!-- #comment-nav-above -->
-		<?php endif; // Check for comment navigation. ?>
+	<?php if ( comments_open() ) : ?>
 
 		<ol class="comment-list">
 			<?php
 				wp_list_comments( array(
 					'style'      => 'ol',
 					'short_ping' => true,
+					'avatar_size' => 50,
+					'callback' => custom_comments
 				) );
 			?>
+
+    		<li id="comment-pending"
+    			v-for="message in waiting">
+
+        		<div class="comment-header">
+	           		<div class="picture"></div>
+		            <div class="text">
+		                <p class="user-name">{{ message.name }}</p>
+		                <div class="comment-meta commentmetadata">À l'instant</div>
+		            </div>
+	            </div>
+
+	            <p class="comment-waiting">En attente de validation.</p>
+
+		        <div class="comment-body">
+		            {{{ message.content }}}
+		        </div>
+    		</li>
+
+			<li id="comment-error"
+				v-if="status === 'error'">
+		        <div class="comment-body">
+		            <p>{{ message }}</p>
+		        </div>
+    		</li>
+
 		</ol><!-- .comment-list -->
 
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-		<nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
-			<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'lilja' ); ?></h2>
-			<div class="nav-links">
-
-				<div class="nav-previous"><?php previous_comments_link( esc_html__( 'Older Comments', 'lilja' ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments', 'lilja' ) ); ?></div>
-
-			</div><!-- .nav-links -->
-		</nav><!-- #comment-nav-below -->
-		<?php
-		endif; // Check for comment navigation.
-
-	endif; // Check for have_comments().
+	<?php endif; // Check for have_comments().
 
 
-	// If comments are closed and there are comments, let's leave a little note, shall we?
-	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
+	comment_form( array(
+		'title_reply' => null,
+		'fields' => array(
+			'author' =>
+			    '<input id="author"
+			    	placeholder="Pseudonyme"
+			    	name="author"
+			    	type="text"
+			    	value="' . esc_attr( $commenter[ 'comment_author' ] ) . '"
+			    	' . $aria_req . ' />',
 
-		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'lilja' ); ?></p>
-	<?php
-	endif;
-
-	comment_form();
+			  'email' =>
+			    '<input id="email"
+			    	placeholder="Email"
+			    	name="email" 
+			    	type="text"
+			    	value="' . esc_attr(  $commenter[ 'comment_author_email' ] ) . '"
+			    	' . $aria_req . ' />'
+		),
+		'comment_field' => '<textarea placeholder="Commentaire" id="comment" name="comment" aria-required="true"></textarea>',
+		'comment_notes_before' => null,
+		'comment_notes_after' => '<p class="comment-notes">' .
+    		'Votre adresse email ne sera pas publiée.<br/>Tous les commentaires requiert une validation de notre part pour être affichés afin d\'éviter tous propos déplacés.' .
+    	'</p>',
+	) );
 	?>
 
 </div><!-- #comments -->

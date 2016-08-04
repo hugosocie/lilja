@@ -38,9 +38,12 @@ module.exports = {
         loadArticle : function( url ){
             if( this.loading ) return;
 
-            //this.isLoading = true;
             this.$root.loadContent( url );
         },
+    },
+
+    components : {
+        'comments' : require( './comments.js' )
     }
 
 }
